@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.csy.Mapper.Impl.HoppyMapper">
+	<sql id="Hoppy_sql">
+
+	</sql>
+	<resultMap type="hoppy" id="hoppy_user_sql">
+	<id property="id" column="id"/>
+	<result property="uId" column="u_id"/>
+	<result property="uhoppy" column="uhoppy"/>
+	<association property="user" javaType="com.csy.pojo.User">
+	<id property="id" column="id"/>
+	<result property="userName" column="userName"/>
+	<result property="pwd" column="pwd"/>
+	<result property="hoppy" column="hoppy"/>
+	</association>
+	</resultMap>
+	<select id="HoppySelectAll" resultMap="hoppy_user_sql" parameterMap="hoppy">
+	select * FROM `user` u 
+	LEFT JOIN u_hobby h 
+	on u.id=h.u_id
+	</select>
+</mapper>

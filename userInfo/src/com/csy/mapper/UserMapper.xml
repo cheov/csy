@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.csy.mapper.Impl.UserMapper">
+ <!--多条件查询  -->
+   <select id="selectUserByNameTwo"  resultType="com.csy.pojo.User">
+  select * from user
+  	<where>
+		<if test="id!=null and id!=''">
+		and	id = #{id}
+		</if>		 	
+		<if test="userName!=null and userName!=''">
+			and userName like concat('%',#{userName},'%')
+		</if>
+	</where>
+  </select>
+	<!--添加 -->
+		<insert id="insertStudent" parameterType="com.csy.pojo.Student">
+		<selectKey resultType="int" order="AFTER"
+			keyProperty="studentId">
+			select LAST_INSERT_ID()
+		</selectKey>
+		insert into student(studentId,studentName,age,studentNo,birthDay)
+		values(#{studentId},#{studentName},#{age},#{studentNo},#{birthDay})
+	</insert>
+	<update id="updateStudent" parameterType="com.csy.pojo.Student">
+		UPDATE student SET studentName = #{studentName}, age = #{age}, studentNo =
+		#{studentNo}, birthDay = #{birthDay}
+		WHERE studentId=#{studentId}
+	</update>
+	<delete id="deleteStudent" parameterType="int">
+		delete from student where studentId=#{studentId}
+	</delete>
+</mapper>
